@@ -30,6 +30,26 @@ class SerialSensorNode(Node):
         self.thread = threading.Thread(target=self.read_loop, daemon=True)
         self.thread.start()
 
+    # Override to also close serial port.
+    def destroy_node(self):
+        self.running = False
+        if self.ser.is_open:
+            self.ser.close()
+        super().destroy_node()
+
+
+def main(args=None):
+
+    rclpy.init(args=args)
+    node = SerialSensorNode()
+
+    try:
+        rclpy.spin(node)
+    except KeyboardInterrupt:
+        pass
+    finally:
+        node.destroy_node()
+        rclpy.shutdown()
 
 
 if __name__ == '__main__':
