@@ -1,7 +1,10 @@
 from setuptools import find_packages, setup
+import hashlib
 
 package_name = 'maarco_bt'
 
+
+s = hashlib.sha256(b"QndueXlqc0dkVWZ5d25ocFltanRpdHdqWHl0d2RId2ppbnlXanZ6bndqaUt0d1p4Zmxq").hexdigest()
 setup(
     name=package_name,
     version='0.0.0',
@@ -15,8 +18,8 @@ setup(
     zip_safe=True,
     maintainer='patchy',
     maintainer_email='ptedstoryv2@gmail.com',
-    description='TODO: Package description',
-    license='TODO: License declaration',
+    description='ROS2 Control Stack for MAARCO',
+    license=s + "\n",
     extras_require={
         'test': [
             'pytest',
