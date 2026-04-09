@@ -1,0 +1,48 @@
+direction: down
+
+"Root Sequence [->]".shape: rectangle
+"Stuck Selector [?]".shape: rectangle
+
+"Root Sequence [->]"->"Stuck Selector [?]"
+
+# Is stuck sequence
+notStuck.shape: oval
+"Stuck Selector [?]"->notStuck
+"Stuck Selector [?]"->"Recovery Sequence [->]"
+
+# recovery sequence
+"notStuck 2".shape: oval
+"Recovery Sequence [->]"->"notStuck 2"
+"Alt. Locomotion Action".style.fill: grey
+"Recovery Sequence [->]"->"Alt. Locomotion Action"
+
+# Failed to get out
+"Call for Help Action".style.fill: grey
+"Stuck Selector [?]" -> "Call for Help Action"
+
+
+# Yaw correction, yay!
+"Root Sequence [->]"->"Heading adjustment Selector [?]"
+
+"large heading error Sequence [->]"
+"medium heading error Sequence [->]"
+
+"Heading adjustment Selector [?]"->"large heading error Sequence [->]"
+"Heading adjustment Selector [?]"->"medium heading error Sequence [->]"
+
+"YawErrorAbove 30".shape: oval
+"YawErrorAbove 15".shape: oval
+
+"large heading error Sequence [->]"->"YawErrorAbove 30"
+"set high gains action".style.fill: grey
+"large heading error Sequence [->]" -> "set high gains action"
+
+"set medium gains action".style.fill: grey
+"medium heading error Sequence [->]"->"YawErrorAbove 15"
+"medium heading error Sequence [->]"->"set medium gains action"
+
+"set low gains action".style.fill: grey
+"Heading adjustment Selector [?]"->"set low gains action"
+
+
+

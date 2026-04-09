@@ -1,0 +1,17 @@
+
+rpi_serial_port
+motor_driver
+
+ros2_stack {
+    ros2_motor_controller_node.style.fill: red
+    ros2_data_node.style.fill: orange
+    ros2_terrain_detection_model_node.style.fill: green
+    ros2_behavior_tree.style.fill: yellow
+}
+ros2_stack.ros2_data_node->rpi_serial_port: read sensor data (UART)
+ros2_stack.ros2_data_node->ros2_stack.ros2_terrain_detection_model_node: publishes data for model to determine if stuck
+ros2_stack.ros2_data_node->ros2_stack.ros2_behavior_tree: publishes sensor data\n/yaw_error
+ros2_stack.ros2_terrain_detection_model_node->ros2_stack.ros2_behavior_tree: publishes terrain estimation info\n/is_stuck
+ros2_stack.ros2_behavior_tree->ros2_stack.ros2_motor_controller_node: publishes PID gains, and locomotion technique
+
+ros2_stack.ros2_motor_controller_node-> motor_driver: controls the motors / locomotion themselves
