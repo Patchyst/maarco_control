@@ -4,6 +4,7 @@ from std_msgs.msg import Float64MultiArray
 # Publishes kp/kd to /pd_gains and returns SUCCESS immediately.
 # kp/kd are hardcoded
 # This action 
+STUCK_GAINS = [1.0, 0.3]
 class SetGains(py_trees.behaviour.Behaviour):
     def __init__(self, ros_node, kp, kd, label):
         super().__init__(name=f"SetGains({label})")
@@ -38,7 +39,10 @@ class TryAltLocomotion(py_trees.behaviour.Behaviour):
     def update(self):
         self.ticks += 1
         if self.ticks < self.max_ticks:
-            self.logger.info("Alt locomotion in progress")
+            msg = Float64MultiArray()
+            msg.data = STUCK_GAINS
+            self.ros_node.gains_pub.publish(msg)
+            self.logger.info(f"Alt locomotion in progress: {self.ros_node.mode}")
             return py_trees.common.Status.RUNNING
         self.logger.info("Alt locomotion attempt complete.")
         return py_trees.common.Status.SUCCESS
@@ -54,8 +58,7 @@ class CallForHelp(py_trees.behaviour.Behaviour):
         super().__init__(name)
         self.ros_node = ros_node
 
-    def initialise(self):
-        # TODO: insert code for calling help from operator  
+    def initialise(self): 
         self.needs_help = True
         self.logger.warning("STUCK: calling for help.")
 

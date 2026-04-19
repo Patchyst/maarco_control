@@ -48,10 +48,10 @@ class HeadingBTNode(Node):
 
         self.is_stuck = False
         self.needs_help = False
-        self.terrain = "dry_sand"
-        self.mode = "crab"
+        self.terrain = "wet_sand"
+        self.mode = "screw"
         self.current_yaw = 0.0
-        self.desired_yaw = 90.0
+        self.desired_yaw = 0.0
 
         # subs
         self.create_subscription(Bool, "/is_stuck", self.stuck_cb, 10)
