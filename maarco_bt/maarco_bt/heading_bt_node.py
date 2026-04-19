@@ -6,6 +6,8 @@ import py_trees
 from maarco_bt.behaviours.conditions import NotStuck, YawErrorAbove, IsWetSand, IsDrySand
 from maarco_bt.behaviours.actions import SetGains, TryAltLocomotion, CallForHelp, SetModeScrew, SetModeCrab
 
+from serial_interfaces.msg import SensorData
+
 """
 Subscribes:
     /is_stuck     (std_msgs/Bool)
@@ -56,7 +58,10 @@ class HeadingBTNode(Node):
         # subs
         self.create_subscription(Bool, "/is_stuck", self.stuck_cb, 10)
         self.create_subscription(String, "/terrain_id", self.terrain_cb, 10)
-        self.create_subscription(Float64, "/current_yaw", self.yaw_cb, 10)
+
+        # This is good for testing, but we need to get current yaw from sensor data.
+        #self.create_subscription(Float64, "/current_yaw", self.yaw_cb, 10)
+        self.create_subscription(SensorData, "/sensor_data", self.sensor_cb, 10)
 
         # pubs
         self.gains_pub = self.create_publisher(Float64MultiArray, "/pd_gains", 10)
@@ -82,6 +87,9 @@ class HeadingBTNode(Node):
 
     def yaw_cb(self, msg):
         self.current_yaw = msg.data
+    
+    def sensor_cb(self, msg):
+        self.current_yaw = msg.yaw
 
     # Build the tree
     def build_tree(self):
