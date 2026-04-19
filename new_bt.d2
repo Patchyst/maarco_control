@@ -1,0 +1,62 @@
+direction: down
+"Root Sequence [->]".shape: rectangle
+
+# Stuck check
+"Stuck Selector [?]".shape: rectangle
+"Root Sequence [->]" -> "Stuck Selector [?]"
+
+notStuck.shape: oval
+"Stuck Selector [?]" -> notStuck
+
+"Recovery Sequence [->]".shape: rectangle
+"Stuck Selector [?]" -> "Recovery Sequence [->]"
+
+"Alt. Locomotion Action".style.fill: grey
+"Recovery Sequence [->]" -> "Alt. Locomotion Action"
+
+"notStuck after recovery".shape: oval
+"Recovery Sequence [->]" -> "notStuck after recovery"
+
+"Call for Help Action".style.fill: grey
+"Stuck Selector [?]" -> "Call for Help Action"
+
+# Terrain selection
+"Terrain Selector [?]".shape: rectangle
+"Root Sequence [->]" -> "Terrain Selector [?]"
+
+"Wet Sand Sequence [->]".shape: rectangle
+"Dry Sand Sequence [->]".shape: rectangle
+"Terrain Selector [?]" -> "Wet Sand Sequence [->]"
+"Terrain Selector [?]" -> "Dry Sand Sequence [->]"
+
+"IsWetSand".shape: oval
+"Wet Sand Sequence [->]" -> "IsWetSand"
+"Set Screw Mode Action (yaw=0)".style.fill: grey
+"Wet Sand Sequence [->]" -> "Set Screw Mode Action (yaw=0)"
+
+"IsDrySand".shape: oval
+"Dry Sand Sequence [->]" -> "IsDrySand"
+"Set Crab Mode Action (yaw=90)".style.fill: grey
+"Dry Sand Sequence [->]" -> "Set Crab Mode Action (yaw=90)"
+
+# Gain selection
+"Gain Selector [?]".shape: rectangle
+"Root Sequence [->]" -> "Gain Selector [?]"
+
+"Large Error Sequence [->]".shape: rectangle
+"Medium Error Sequence [->]".shape: rectangle
+"Gain Selector [?]" -> "Large Error Sequence [->]"
+"Gain Selector [?]" -> "Medium Error Sequence [->]"
+
+"YawErrorAbove 30".shape: oval
+"Large Error Sequence [->]" -> "YawErrorAbove 30"
+"Set High Gains Action".style.fill: grey
+"Large Error Sequence [->]" -> "Set High Gains Action"
+
+"YawErrorAbove 10".shape: oval
+"Medium Error Sequence [->]" -> "YawErrorAbove 10"
+"Set Medium Gains Action".style.fill: grey
+"Medium Error Sequence [->]" -> "Set Medium Gains Action"
+
+"Set Low Gains Action".style.fill: grey
+"Gain Selector [?]" -> "Set Low Gains Action"
