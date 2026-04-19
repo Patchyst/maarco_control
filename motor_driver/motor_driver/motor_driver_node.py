@@ -19,9 +19,8 @@ class MotorDriver(Node):
         lgpio.gpio_claim_output(self.h, self.right_pin)
         self.get_logger().info("Motor driver initialized with lgpio")
 
-    def set_pwm(self, pin, value):
-        pulse = int(1500 + value * 250)
-        lgpio.tx_servo(self.h, pin, pulse)
+    def set_pwm(self, pin, pulse):
+        lgpio.tx_servo(self.h, pin, int(pulse))
 
     def callback(self, msg):
         self.set_pwm(self.left_pin, msg.left_pwm)
