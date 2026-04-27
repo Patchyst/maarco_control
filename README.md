@@ -5,6 +5,9 @@ Behavior tree for changing locomotion methods based on terrain identification. F
 # Behavior Tree
 <img width="1328" height="345" alt="image" src="https://github.com/user-attachments/assets/5c764ccd-6459-4c0a-9cf3-3f4670d723af" />
 
+# Terrain Mode Changes
+<img width="345" height="409" alt="image" src="https://github.com/user-attachments/assets/065ccfde-1189-4a5c-9c87-98a692c44e64" />
+
 # Build Instructions
 Clone the repo, place it in the `src` folder of a ros2 workspace. Then:
 ```bash
